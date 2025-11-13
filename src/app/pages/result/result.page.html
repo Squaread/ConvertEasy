@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Resultado</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="result-container">
+    
+    <!-- Ícone de Sucesso Animado -->
+    <div class="success-animation">
+      <div class="success-icon">
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </div>
+    </div>
+
+    <!-- Mensagem de Sucesso -->
+    <div class="success-message">
+      <h1>Conversão Concluída!</h1>
+      <p>Seu arquivo foi convertido com sucesso</p>
+    </div>
+
+    <!-- Card com Informações do Arquivo -->
+    <ion-card class="file-card">
+      <div class="file-card-header">
+        <div class="file-icon-result" [class]="getFileColor()">
+          <ion-icon [name]="getFileIcon()"></ion-icon>
+        </div>
+        <div class="file-info-result">
+          <h2>{{ fileName }}</h2>
+          <div class="file-meta">
+            <span class="file-type-badge" [class]="getFileColor()">
+              {{ fileType.toUpperCase() }}
+            </span>
+            <span class="file-size-badge">
+              <ion-icon name="document-outline"></ion-icon>
+              {{ getFormattedSize() }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview do texto (apenas para OCR) -->
+      <div *ngIf="hasPreview()" class="text-preview">
+        <div class="preview-header">
+          <ion-icon name="eye-outline"></ion-icon>
+          <h4>Preview do texto extraído</h4>
+        </div>
+        <pre>{{ getTextPreview() }}</pre>
+      </div>
+    </ion-card>
+
+    <!-- Botões de Ação -->
+    <div class="action-buttons">
+      
+      <!-- Download -->
+      <ion-button 
+        expand="block" 
+        class="download-button"
+        (click)="downloadFile()"
+        *ngIf="fileBlob">
+        <ion-icon name="download" slot="start"></ion-icon>
+        <span>Download Arquivo</span>
+      </ion-button>
+
+      <!-- Visualizar -->
+      <ion-button 
+        expand="block" 
+        fill="outline"
+        class="view-button"
+        (click)="viewFile()"
+        *ngIf="fileBlob && (fileType === 'pdf' || fileType === 'txt')">
+        <ion-icon name="eye" slot="start"></ion-icon>
+        <span>Visualizar</span>
+      </ion-button>
+
+      <!-- Compartilhar -->
+      <ion-button 
+        expand="block" 
+        fill="outline"
+        class="share-button"
+        (click)="shareFile()"
+        *ngIf="fileBlob">
+        <ion-icon name="share-social" slot="start"></ion-icon>
+        <span>Compartilhar</span>
+      </ion-button>
+
+      <!-- Converter Outro -->
+      <ion-button 
+        expand="block" 
+        class="convert-another-button"
+        (click)="convertAnother()">
+        <ion-icon name="refresh-circle" slot="start"></ion-icon>
+        <span>Converter Outro Arquivo</span>
+      </ion-button>
+
+      <!-- Voltar para Home -->
+      <ion-button 
+        expand="block" 
+        fill="clear"
+        class="home-button"
+        (click)="goHome()">
+        <ion-icon name="home" slot="start"></ion-icon>
+        <span>Voltar para Home</span>
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

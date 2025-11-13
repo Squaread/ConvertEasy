@@ -1,0 +1,274 @@
+.content-wrapper {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%);
+}
+
+// Card do arquivo
+.file-info-card {
+  background: rgb(191, 222, 248);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 2px solid #E5E7EB;
+
+  .file-icon-large {
+    
+    width: 90px;
+    height: 90px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 48px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+    &.pdf { background: linear-gradient(135deg, var(--pdf-color) 0%, #DC2626 100%); }
+    &.txt { background: linear-gradient(135deg, var(--txt-color) 0%, #059669 100%); }
+    &.mp3 { background: linear-gradient(135deg, var(--mp3-color) 0%, #D97706 100%); }
+  }
+
+  .file-details {
+    text-align: center;
+    width: 100%;
+    
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 12px 0;
+      word-break: break-word;
+    }
+
+    .conversion-badge {
+     
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 14px;
+
+      &.pdf {
+        background: #ff9898;
+        color: var(--pdf-color);
+      }
+
+      &.txt {
+        background: #9dffad;
+        color: var(--txt-color);
+      }
+
+      &.mp3 {
+        background: #fff0b3;
+        color: var(--mp3-color);
+      }
+
+      ion-icon {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+// Progresso
+.progress-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  .progress-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+
+    ion-icon {
+      font-size: 24px;
+      color: var(--primary-color);
+
+      &.spinning {
+        animation: spin 2s linear infinite;
+      }
+    }
+
+    span {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 16px;
+    }
+  }
+
+  .progress-bar {
+    height: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  .progress-text {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Card de informações
+.info-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  .info-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #F3F4F6;
+
+    ion-icon {
+      font-size: 26px;
+      color: var(--primary-color);
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+    }
+  }
+
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    .info-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      ion-icon {
+        font-size: 18px;
+        color: white;
+      }
+
+      &.success {
+        background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%);
+      }
+
+      &.primary {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      }
+
+      &.accent {
+        background: linear-gradient(135deg, var(--accent-color) 0%, #D97706 100%);
+      }
+    }
+
+    p {
+      flex: 1;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.6;
+      padding-top: 5px;
+
+      strong {
+        color: var(--text-primary);
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+// Botões
+.action-buttons {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .convert-button {
+    background-color: #a4c4ff;
+    --background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    --border-radius: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    height: 56px;
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    font-size: 16px;
+    transition: all 0.3s ease;
+
+    &:hover:not([disabled]) {
+      transform: translateY(-2px);
+      background-color: #78a7ff;
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+    }
+
+    &[disabled] {
+      opacity: 0.6;
+      box-shadow: none;
+      --background: #CBD5E1;
+    }
+
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+
+  
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: 15px;
+  }
+
+  .file-info-card {
+    padding: 20px;
+
+    .file-icon-large {
+      width: 75px;
+      height: 75px;
+      font-size: 40px;
+    }
+  }
+}

@@ -1,0 +1,139 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()">
+        <ion-icon name="arrow-back-outline" style="font-size: 26px; color: rgb(78, 78, 78);"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Histórico</ion-title>
+    <ion-buttons slot="end" *ngIf="!isEmpty">
+      <ion-button fill="clear" (click)="clearAllHistory()">
+        <ion-icon name="trash-outline" style="font-size: 24px; color: rgb(129, 0, 0);"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="history-container">
+
+    <!-- Filtros -->
+    <div class="filter-section" *ngIf="!isEmpty">
+      <ion-segment [(ngModel)]="selectedFilter" (ionChange)="applyFilter(selectedFilter)" mode="md">
+        <ion-segment-button value="all">
+          <ion-label>
+            <div class="segment-content">
+              <ion-icon name="apps-outline"></ion-icon>
+              <span>Todos</span>
+              <span class="badge">{{ allHistory.length }}</span>
+            </div>
+          </ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="pdf">
+          <ion-label>
+            <div class="segment-content">
+              <ion-icon name="document-text-outline"></ion-icon>
+              <span>PDF</span>
+              <span class="badge pdf">{{ getCountByType('pdf') }}</span>
+            </div>
+          </ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="txt">
+          <ion-label>
+            <div class="segment-content">
+              <ion-icon name="document-outline"></ion-icon>
+              <span>TXT</span>
+              <span class="badge txt">{{ getCountByType('txt') }}</span>
+            </div>
+          </ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="mp3">
+          <ion-label>
+            <div class="segment-content">
+              <ion-icon name="musical-notes-outline"></ion-icon>
+              <span>MP3</span>
+              <span class="badge mp3">{{ getCountByType('mp3') }}</span>
+            </div>
+          </ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <!-- Estado Vazio -->
+    <div class="empty-state" *ngIf="isEmpty">
+      <div class="empty-animation">
+        <ion-icon name="folder-open-outline"></ion-icon>
+      </div>
+      <h2>Nenhuma conversão ainda</h2>
+      <p>Suas conversões aparecerão aqui</p>
+      <ion-button expand="block" class="start-button" (click)="goBack()">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Fazer Primeira Conversão
+      </ion-button>
+    </div>
+
+    <!-- Lista de Histórico -->
+    <ion-list *ngIf="!isEmpty && filteredHistory.length > 0" class="history-list">
+      <div 
+        *ngFor="let item of filteredHistory" 
+        class="history-item-wrapper">
+        
+        <div class="history-item" (click)="openItem(item)">
+          <div class="item-icon" [class]="getFileColor(item.fileType)">
+            <ion-icon [name]="getFileIcon(item.fileType)"></ion-icon>
+          </div>
+
+          <div class="item-info">
+            <h2>{{ item.fileName }}</h2>
+            <div class="item-meta">
+              <span class="file-tag" [class]="getFileColor(item.fileType)">
+                {{ item.fileType.toUpperCase() }}
+              </span>
+              <span class="file-size">{{ formatSize(item.fileSize) }}</span>
+              <span class="file-date">
+                <ion-icon name="time-outline"></ion-icon>
+                {{ formatDate(item.date) }}
+              </span>
+            </div>
+          </div>
+
+          <div class="item-actions">
+            <!-- Botão Reproduzir (APENAS para MP3) -->
+            <ion-button 
+              *ngIf="item.fileType === 'mp3' && isFileSaved(item)"
+              fill="clear" 
+              class="action-btn play-btn"
+              (click)="playAudio(item, $event)">
+              <ion-icon name="play-circle-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+
+            <!-- Botão Download (para PDF e TXT) -->
+            <ion-button 
+              *ngIf="item.fileType !== 'mp3' && isFileSaved(item)"
+              fill="clear" 
+              class="action-btn download-btn"
+              (click)="reDownloadFile(item, $event)">
+              <ion-icon name="download-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+
+            <!-- Botão Deletar -->
+            <ion-button 
+              fill="clear" 
+              class="action-btn delete-btn"
+              (click)="deleteItem(item, $event)">
+              <ion-icon name="trash-outline" slot="icon-only" ></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </ion-list>
+
+    <!-- Nenhum resultado no filtro -->
+    <div class="no-results" *ngIf="!isEmpty && filteredHistory.length === 0">
+      <ion-icon name="search-outline"></ion-icon>
+      <h3>Nenhum resultado encontrado</h3>
+      <p>Não há itens {{ selectedFilter !== 'all' ? selectedFilter.toUpperCase() : '' }} no histórico</p>
+    </div>
+
+  </div>
+</ion-content>

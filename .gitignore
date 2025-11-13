@@ -1,0 +1,47 @@
+# Dependências
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build
+dist/
+www/
+build/
+.angular/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Ionic
+.ionic/
+.sourcemaps/
+
+# Capacitor
+android/
+ios/
+.capacitor/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+
+# Testing
+coverage/
+.nyc_output/
+
+# Outros
+*.zip
+*.tar.gz

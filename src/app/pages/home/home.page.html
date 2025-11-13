@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goToHistory()">
+        History
+      </ion-button>
+    </ion-buttons>
+    <ion-title>ConvertEasy</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content-wrapper">
+    <!-- Área de Upload -->
+    <div class="upload-area" (click)="selectFile()" [class.file-selected]="selectedFile">
+      <div class="upload-icon">
+        <ion-icon [name]="selectedFile ? 'document-text-outline' : 'add-outline'" style="font-size: 32px; color: white;"></ion-icon>
+      </div>
+      <div class="upload-text">{{ selectedFile ? fileName : 'Send a file' }}</div>
+      <div class="upload-subtext" *ngIf="!selectedFile">JPG, PNG, TXT até 10MB</div>
+      <div class="upload-subtext" *ngIf="selectedFile" style="color: var(--success-color); font-weight: 600;">
+        ✓ Arquivo carregado
+      </div>
+    </div>
+
+    <!-- Opções de Conversão -->
+<div class="conversion-options">
+  <div 
+    class="convert-btn pdf" 
+    [class.selected]="selectedConversionType === 'pdf'"
+    (click)="selectConversionType('pdf')">
+    <div class="btn-icon-wrapper">
+      <div class="btn-icon pdf">
+        <ion-icon name="document-text"></ion-icon>
+         <h5 class="icon-label">PDF</h5>
+      </div>
+    </div>
+    <div class="btn-content">
+      <span class="btn-title">Converter para PDF</span>
+      <span class="btn-subtitle">Transforme texto em documento</span>
+    </div>
+    <div class="check-icon" *ngIf="selectedConversionType === 'pdf'">
+      <ion-icon name="checkmark-circle"></ion-icon>
+    </div>
+  </div>
+
+  <div 
+    class="convert-btn txt" 
+    [class.selected]="selectedConversionType === 'ocr'"
+    (click)="selectConversionType('ocr')">
+    <div class="btn-icon-wrapper">
+      <div class="btn-icon txt">
+        <ion-icon name="scan"></ion-icon>
+        <h5 class="icon-label">TXT</h5>
+      </div>
+    </div>
+    <div class="btn-content">
+      <span class="btn-title">Extrair Texto (OCR)</span>
+      <span class="btn-subtitle">Capture texto de imagens</span>
+    </div>
+    <div class="check-icon" *ngIf="selectedConversionType === 'ocr'">
+      <ion-icon name="checkmark-circle"></ion-icon>
+    </div>
+  </div>
+
+  <div 
+    class="convert-btn mp3" 
+    [class.selected]="selectedConversionType === 'tts'"
+    (click)="selectConversionType('tts')">
+    <div class="btn-icon-wrapper">
+      <div class="btn-icon mp3">
+        <ion-icon name="volume-high"></ion-icon>
+        <h5 class="icon-label">MP3</h5>
+      </div>
+    </div>
+    <div class="btn-content">
+      <span class="btn-title">Narrar Texto (MP3)</span>
+      <span class="btn-subtitle">Ouça seu texto em voz alta</span>
+    </div>
+    <div class="check-icon" *ngIf="selectedConversionType === 'tts'">
+      <ion-icon name="checkmark-circle"></ion-icon>
+    </div>
+  </div>
+</div>
+
+    <!-- Botão Converter -->
+    <ion-button 
+      expand="block" 
+      class="convert-button" 
+      [disabled]="!selectedFile || !selectedConversionType"
+      (click)="goToConvert()">
+      CONVERT
+    </ion-button>
+
+    <!-- Botão Resetar (opcional) -->
+    <ion-button 
+      *ngIf="selectedFile"
+      expand="block" 
+      fill="outline"
+      class="reset-button" 
+      (click)="reset()">
+      LIMPAR SELEÇÃO
+    </ion-button>
+  </div>
+
+  <!-- Input oculto para selecionar arquivo -->
+  <input 
+    #fileInput 
+    type="file" 
+    style="display: none;" 
+    accept="image/*,.txt"
+    (change)="onFileSelected($event)">
+</ion-content>

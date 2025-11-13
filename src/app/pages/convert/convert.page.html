@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()">
+        <ion-icon name="arrow-back-outline" style="font-size: 26px; color: rgb(63, 63, 63);"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>ConvertEasy</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content-wrapper">
+    
+    <!-- Card do Arquivo -->
+    <div class="file-info-card">
+      <div class="file-icon-large" [class]="getConversionColor()">
+        <ion-icon [name]="getConversionIcon()"></ion-icon>
+      </div>
+      <div class="file-details">
+        <h2>{{ fileName }}</h2>
+        <div class="conversion-badge" [class]="getConversionColor()">
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+          <span>{{ getConversionTypeName() }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra de Progresso -->
+    <div *ngIf="isProcessing" class="progress-card">
+      <div class="progress-header">
+        <ion-icon name="sync-outline" class="spinning"></ion-icon>
+        <span>Processando...</span>
+      </div>
+      <ion-progress-bar [value]="progress" class="progress-bar"></ion-progress-bar>
+      <p class="progress-text">{{ (progress * 100).toFixed(0) }}%</p>
+    </div>
+
+    <!-- Informações -->
+    <div class="info-card">
+      <div class="info-header">
+        <ion-icon name="information-circle"></ion-icon>
+        <h3>Sobre esta conversão</h3>
+      </div>
+      
+      <div class="info-list">
+        <div class="info-item">
+          <div class="info-icon success">
+            <ion-icon name="checkmark"></ion-icon>
+          </div>
+          <p *ngIf="conversionType === 'pdf'">Seu texto será convertido em documento PDF de alta qualidade</p>
+          <p *ngIf="conversionType === 'ocr'">O texto da imagem será extraído e salvo em arquivo de texto</p>
+          <p *ngIf="conversionType === 'tts'">Seu texto será narrado em voz alta</p>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon primary">
+            <ion-icon name="time"></ion-icon>
+          </div>
+          <p>Tempo estimado: <strong>{{ conversionType === 'ocr' ? '10-30' : '2-10' }} segundos</strong></p>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon accent">
+            <ion-icon name="save"></ion-icon>
+          </div>
+          <p>Salvo automaticamente no histórico</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botões -->
+    <div class="action-buttons">
+      <ion-button 
+        expand="block" 
+        class="convert-button" 
+        [disabled]="isProcessing"
+        (click)="startConversion()">
+        <ion-icon [name]="isProcessing ? 'hourglass-outline' : 'play-circle'" slot="start"></ion-icon>
+        {{ isProcessing ? 'PROCESSANDO...' : 'INICIAR CONVERSÃO' }}
+      </ion-button>
+
+      
+    </div>
+  </div>
+</ion-content>
